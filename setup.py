@@ -31,11 +31,10 @@ setup(
         'asphalt.py4j'
     ],
     setup_requires=[
-        'setuptools >= 8.0',
         'setuptools_scm >= 1.7.0'
     ],
     install_requires=[
-        'asphalt ~= 1.1',
+        'asphalt >= 1.1, < 1.999',
         'py4j >= 0.9.0'
     ],
     entry_points={
