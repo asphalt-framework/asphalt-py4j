@@ -10,10 +10,11 @@ This documentation was not meant as a tutorial for Py4J itself. For that you sho
 .. _py4j: https://www.py4j.org/contents.html
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
    configuration
    usage
+   versionhistory
 
 
 Indices and tables
