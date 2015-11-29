@@ -1,10 +1,9 @@
-import re
 from asyncio import coroutine
 from importlib import import_module
-
 from typing import Dict, Any, Union, Iterable
 import logging
 import os
+import re
 
 from py4j.java_gateway import (JavaGateway, launch_gateway, GatewayParameters,
                                CallbackServerParameters)
@@ -22,9 +21,9 @@ class Py4JComponent(Component):
     objects as resources and context variables.
 
     :param gateways: a dictionary of JavaGateway resource name ->
-                     :meth:`create_gateway` keyword arguments
-    :param default_gateway_args: :meth:`create_gateway` arguments for the
-                                 default gateway
+        :meth:`create_gateway` keyword arguments
+    :param default_gateway_args: :meth:`create_gateway` arguments for
+        the default gateway
     """
 
     package_re = re.compile(r'\{(.+?)\}')
@@ -49,21 +48,23 @@ class Py4JComponent(Component):
         """
         Configures a Py4J gateway with the given parameters.
 
-        :param resource_name: resource name the mailer will be published as
+        :param resource_name: resource name the mailer will be
+            published as
         :param context_attr: the mailer's attribute name on the context
-                             (defaults to the value of ``resource_name``)
-        :param launch_jvm: ``True`` to spawn a Java Virtual Machine in a
-                           subprocess and connect to it, ``False`` to
-                           connect to an existing Py4J enabled JVM
-        :param gateway: either a :class:`~py4j.java_gateway.GatewayParameters`
-                        object or a dictionary of keyword arguments for it
+             (defaults to the value of ``resource_name``)
+        :param launch_jvm: ``True`` to spawn a Java Virtual Machine in
+            a subprocess and connect to it, ``False`` to connect to an
+            existing Py4J enabled JVM
+        :param gateway: either a
+            :class:`~py4j.java_gateway.GatewayParameters` object or a
+            dictionary of keyword arguments for it
         :param callback_server: callback server parameters or a boolean
-                                indicating if a callback server is wanted
+            indicating if a callback server is wanted
         :param javaopts: options passed to Java itself
         :param classpath: path or iterable of paths to pass to the JVM
-                          launcher as the class path
-        """
+            launcher as the class path
 
+        """
         context_attr = context_attr or resource_name
         classpath = classpath if isinstance(classpath, str) else os.pathsep.join(classpath)
         javaopts = list(javaopts)
