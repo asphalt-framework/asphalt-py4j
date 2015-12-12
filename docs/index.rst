@@ -20,5 +20,4 @@ This documentation was not meant as a tutorial for Py4J itself. For that you sho
 Indices and tables
 ==================
 
-* :ref:`modindex`
-
+* :ref:`API reference <modindex>`
