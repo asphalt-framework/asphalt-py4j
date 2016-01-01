@@ -6,7 +6,7 @@ prints it on standard output.
 from asphalt.core.component import ContainerComponent
 from asphalt.core.context import Context
 from asphalt.core.runner import run_application
-from asphalt.core.util import blocking, stop_event_loop
+from asphalt.core.concurrency import blocking, stop_event_loop
 
 
 class SourcePrinterComponent(ContainerComponent):

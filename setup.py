@@ -34,7 +34,7 @@ setup(
         'setuptools_scm >= 1.7.0'
     ],
     install_requires=[
-        'asphalt >= 1.1, < 1.999',
+        'asphalt >= 1.2, < 2.0',
         'py4j >= 0.9.0'
     ],
     entry_points={
