@@ -7,6 +7,7 @@ import re
 
 from py4j.java_gateway import (JavaGateway, launch_gateway, GatewayParameters,
                                CallbackServerParameters)
+from typeguard import check_argument_types
 from asphalt.core.component import Component
 from asphalt.core.context import Context
 
@@ -29,6 +30,7 @@ class Py4JComponent(Component):
     package_re = re.compile(r'\{(.+?)\}')
 
     def __init__(self, gateways: Dict[str, Dict[str, Any]]=None, **default_gateway_args):
+        assert check_argument_types()
         if gateways and default_gateway_args:
             raise ValueError('specify either a "gateways" dictionary or the default gateway\'s '
                              'options directly, but not both')
@@ -65,6 +67,7 @@ class Py4JComponent(Component):
             launcher as the class path
 
         """
+        assert check_argument_types()
         context_attr = context_attr or resource_name
         classpath = classpath if isinstance(classpath, str) else os.pathsep.join(classpath)
         javaopts = list(javaopts)
