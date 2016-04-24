@@ -17,7 +17,7 @@ The minimal configuration is as follows:
 .. code-block:: yaml
 
     components:
-      py4j: {}
+      py4j:
 
 This will publish a resource of type :class:`py4j.java_gateway.JavaGateway`, named ``default``.
 It will appear in the context as the ``java`` attribute.
