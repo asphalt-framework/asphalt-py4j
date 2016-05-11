@@ -3,7 +3,7 @@ Version history
 
 This library adheres to `Semantic Versioning <http://semver.org/>`_.
 
-**2.0.0**
+**2.0.0** (2016-05-11)
 
 - **BACKWARD INCOMPATIBLE** Migrated to Asphalt 2.0
 - Allowed combining ``gateways`` with default parameters
