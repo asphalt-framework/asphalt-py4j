@@ -1,6 +1,8 @@
 Configuration
 =============
 
+.. highlight:: yaml
+
 There are two principal ways to use a Java Virtual Machine with Py4J:
 
 #. Launch a new JVM just for the application, in a subprocess
@@ -12,9 +14,7 @@ the application and is shut down when the application is shut down.
 The second method is primarly useful in special scenarios like connecting to a Java EE container.
 Shutting down the application has no effect in the Java side gateway then.
 
-The minimal configuration is as follows:
-
-.. code-block:: yaml
+The minimal configuration is as follows::
 
     components:
       py4j:
@@ -22,14 +22,11 @@ The minimal configuration is as follows:
 This will publish a resource of type :class:`py4j.java_gateway.JavaGateway`, named ``default``.
 It will appear in the context as the ``java`` attribute.
 
-
 Connecting to an existing JVM
 -----------------------------
 
 To connect to an existing Java Virtual Machine, specify the host address and port of the JVM that
-has a GatewayServer_ running, you can use a configuration similar to this:
-
-.. code-block:: yaml
+has a GatewayServer_ running, you can use a configuration similar to this::
 
     components:
       py4j:
@@ -44,14 +41,11 @@ you want to use the default.
 
 .. _GatewayServer: https://www.py4j.org/_static/javadoc/index.html?py4j/GatewayServer.html
 
-
 Multiple gateways
 -----------------
 
 If you need to configure multiple gateways, you can do so by using the ``gateways`` configuration
-option:
-
-.. code-block:: yaml
+option::
 
     components:
       py4j:
@@ -67,7 +61,6 @@ This configures two :class:`py4j.gateway.JavaGateway` resources, named ``default
 Their corresponding context attributes are ``java`` and ``remote``.
 If you omit the ``context_attr`` option for a gateway, its resource name will be used.
 
-
 Adding jars to the class path
 -----------------------------
 
@@ -80,9 +73,8 @@ upstream library itself.
 
 Suppose your project has a package named ``foo.bar.baz`` and a subdirectory named ``javalib``.
 The relative path from your project root to this subdirectory would then be
-``foo/bar/baz/javalib``. To properly express this in your class path configuration,
-
-.. code-block:: yaml
+``foo/bar/baz/javalib``. To properly express this in your class path configuration, you can do
+this::
 
     components:
       py4j:
