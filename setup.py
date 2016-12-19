@@ -34,6 +34,14 @@ setup(
         'asphalt ~= 2.0',
         'py4j >= 0.9.2, != 0.10.0'
     ],
+    extras_require={
+        'testing': [
+            'pytest',
+            'pytest-cov',
+            'pytest-catchlog',
+            'pytest-asyncio >= 0.5.0'
+        ]
+    },
     entry_points={
         'asphalt.components': [
             'py4j = asphalt.py4j.component:Py4JComponent'
