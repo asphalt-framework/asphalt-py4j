@@ -12,11 +12,8 @@ distribution.
 
 .. code-block:: python3
 
-    from asyncio_extras import threadpool
-
-
     async def handler(ctx):
-        async with threadpool():
+        async with ctx.threadpool():
             f = ctx.java.jvm.java.io.File('/tmp/test.txt')
             writer = ctx.java.jvm.java.io.FileWriter(f)
             writer.write('Hello, Python!')

@@ -1,7 +1,7 @@
 import os
 
 import pytest
-from py4j.java_gateway import JavaGateway, CallbackServerParameters
+from py4j.java_gateway import JavaGateway, CallbackServerParameters, GatewayParameters
 
 from asphalt.core.context import Context
 from asphalt.py4j.component import Py4JComponent
@@ -21,6 +21,13 @@ async def test_default_gateway(caplog):
     assert records[1].message == 'Py4J gateway (default) shut down'
 
 
+def test_gateway_params():
+    """Test that a GatewayParameters instance is used as is."""
+    params = GatewayParameters()
+    launch_jvm, gw_params, *rest = Py4JComponent.configure_gateway(False, params)
+    assert gw_params is params
+
+
 @pytest.mark.parametrize('params', [
     CallbackServerParameters('1.2.3.4', 5678),
     {'address': '1.2.3.4', 'port': 5678}
@@ -31,7 +38,7 @@ def test_callback_server_params(params):
     instance or a dict.
 
     """
-    params = Py4JComponent.configure_gateway('default', callback_server=params)[-3]
+    params = Py4JComponent.configure_gateway(callback_server=params)[-3]
     assert params.address == '1.2.3.4'
     assert params.port == 5678
 
@@ -43,8 +50,7 @@ def test_classpath_pkgname_substitution():
 
     """
     import asphalt.py4j
-    classpath = Py4JComponent.configure_gateway('default',
-                                                classpath='{asphalt.py4j}/javadir/*')[-2]
+    classpath = Py4JComponent.configure_gateway(classpath='{asphalt.py4j}/javadir/*')[-2]
     assert classpath == '%s/javadir/*' % os.path.dirname(asphalt.py4j.__file__)
     assert classpath.endswith(os.path.join('asphalt', 'py4j', 'javadir', '*'))
 

@@ -3,6 +3,10 @@ Version history
 
 This library adheres to `Semantic Versioning <http://semver.org/>`_.
 
+**3.0.0** (2017-04-11)
+
+- **BACKWARD INCOMPATIBLE** Migrated to Asphalt 3.0 and py4j 0.10.4+
+
 **2.0.0** (2016-05-11)
 
 - **BACKWARD INCOMPATIBLE** Migrated to Asphalt 2.0
