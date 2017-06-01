@@ -31,8 +31,9 @@ setup(
         'setuptools_scm >= 1.7.0'
     ],
     install_requires=[
-        'asphalt ~= 3.0',
-        'py4j >= 0.10.4'
+        'asphalt >= 3.0, < 5.0',
+        'py4j >= 0.10.4',
+        'typeguard ~= 2.0'
     ],
     extras_require={
         'testing': [
