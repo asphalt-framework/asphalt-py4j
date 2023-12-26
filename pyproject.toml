@@ -38,6 +38,7 @@ Homepage = "https://github.com/asphalt-framework/asphalt-py4j"
 [project.optional-dependencies]
 test = [
     "anyio >= 4.0",
+    "coverage >= 7",
     "pytest",
 ]
 doc = [
