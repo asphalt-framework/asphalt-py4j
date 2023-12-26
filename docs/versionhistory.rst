@@ -1,7 +1,17 @@
 Version history
 ===============
 
-This library adheres to `Semantic Versioning <http://semver.org/>`_.
+This library adheres to `Semantic Versioning 2.0 <http://semver.org/>`_.
+
+**UNRELEASED**
+
+- **BACKWARD INCOMPATIBLE** Bumped minimum Asphalt version to 4.8
+- **BACKWARD INCOMPATIBLE** Refactored component to only provide a single Java gateway
+  (you will have to add two components to get two Java gateways)
+- **BACKWARD INCOMPATIBLE** Dropped the context attribute (use dependency injection
+  instead)
+- Dropped explicit run-time type checking
+- Dropped support for Python 3.7 (and earlier)
 
 **3.0.1** (2017-06-04)
 

@@ -1,5 +1,5 @@
 .. include:: ../README.rst
-   :start-line: 7
+   :start-line: 10
    :end-before: Project links
 
 Table of contents
@@ -10,6 +10,5 @@ Table of contents
 
    configuration
    usage
+   api
    versionhistory
-
-* :ref:`API reference <modindex>`

@@ -1,23 +1,27 @@
 """
-A simple example that reads its own source code using Java classes and then prints it on standard
-output.
+A simple example that reads its own source code using Java classes and then prints it on
+standard output.
 """
+
+from py4j.java_gateway import JavaGateway
 
 from asphalt.core import CLIApplicationComponent, Context, run_application
 
 
 class ApplicationComponent(CLIApplicationComponent):
-    async def start(self, ctx: Context):
-        self.add_component('py4j')
+    async def start(self, ctx: Context) -> None:
+        self.add_component("py4j")
         await super().start(ctx)
 
-    async def run(self, ctx):
+    async def run(self, ctx: Context) -> None:
+        javagw = ctx.require_resource(JavaGateway)
         async with ctx.threadpool():
-            f = ctx.java.jvm.java.io.File(__file__)
-            buffer = ctx.java.new_array(ctx.java.jvm.char, f.length())
-            reader = ctx.java.jvm.java.io.FileReader(f)
+            f = javagw.jvm.java.io.File(__file__)
+            buffer = javagw.new_array(javagw.jvm.char, f.length())
+            reader = javagw.jvm.java.io.FileReader(f)
             reader.read(buffer)
             reader.close()
-            print(ctx.java.jvm.java.lang.String(buffer))
+            print(javagw.jvm.java.lang.String(buffer))
+
 
 run_application(ApplicationComponent())
