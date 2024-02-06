@@ -79,8 +79,12 @@ def test_classpath_pkgname_substitution() -> None:
     absolute directory paths.
 
     """
-    component = Py4JComponent(classpath="{asphalt.py4j}/javadir/*")
-    assert component.classpath == f"{os.path.dirname(asphalt.py4j.__file__)}/javadir/*"
+    component = Py4JComponent(
+        classpath=f"{{asphalt.py4j}}{os.path.sep}javadir{os.path.sep}*"
+    )
+    assert component.classpath == (
+        f"{os.path.dirname(asphalt.py4j.__file__)}{os.path.sep}javadir{os.path.sep}*"
+    )
     assert component.classpath.endswith(os.path.join("asphalt", "py4j", "javadir", "*"))
 
 
