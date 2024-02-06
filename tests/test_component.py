@@ -4,12 +4,13 @@ import logging
 import os
 from typing import Any
 
-import asphalt.py4j
 import pytest
-from asphalt.core.context import Context
-from asphalt.py4j.component import Py4JComponent
+from asphalt.core import Context, require_resource
 from py4j.java_gateway import CallbackServerParameters, GatewayParameters, JavaGateway
 from pytest import LogCaptureFixture
+
+import asphalt.py4j
+from asphalt.py4j._component import Py4JComponent
 
 
 @pytest.mark.anyio
@@ -24,14 +25,12 @@ async def test_default_gateway(
     kwargs: dict[str, Any], resource_name: str, caplog: LogCaptureFixture
 ) -> None:
     """Test that the default gateway is started and is available on the context."""
-    caplog.set_level(logging.INFO, logger="asphalt.py4j.component")
-    async with Context() as context:
-        await Py4JComponent(**kwargs).start(context)
-        context.require_resource(JavaGateway, resource_name)
+    caplog.set_level(logging.INFO, logger="asphalt.py4j")
+    async with Context():
+        await Py4JComponent(**kwargs).start()
+        require_resource(JavaGateway, resource_name)
 
-    records = [
-        record for record in caplog.records if record.name == "asphalt.py4j.component"
-    ]
+    records = [record for record in caplog.records if record.name == "asphalt.py4j"]
     records.sort(key=lambda r: r.message)
     assert len(records) == 2
     assert records[0].message.startswith(
@@ -101,9 +100,9 @@ async def test_callback_server() -> None:
         class Java:
             implements = ["java.util.concurrent.Callable"]
 
-    async with Context() as context:
-        await Py4JComponent(callback_server=True).start(context)
-        gateway = context.require_resource(JavaGateway)
+    async with Context():
+        await Py4JComponent(callback_server=True).start()
+        gateway = require_resource(JavaGateway)
         executor = gateway.jvm.java.util.concurrent.Executors.newFixedThreadPool(1)
         try:
             future = executor.submit(NumberCallable())
@@ -120,11 +119,11 @@ async def test_gateway_close() -> None:
 
     """
     gateway = JavaGateway.launch_gateway()
-    async with Context() as context:
+    async with Context():
         await Py4JComponent(
             gateway={"port": gateway.gateway_parameters.port}, launch_jvm=False
-        ).start(context)
-        gateway2 = context.require_resource(JavaGateway)
+        ).start()
+        gateway2 = require_resource(JavaGateway)
         gateway2.jvm.java.lang.System.setProperty("TEST_VALUE", "abc")
 
     assert gateway.jvm.java.lang.System.getProperty("TEST_VALUE") == "abc"

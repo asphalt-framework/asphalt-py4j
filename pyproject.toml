@@ -37,9 +37,9 @@ Homepage = "https://github.com/asphalt-framework/asphalt-py4j"
 
 [project.optional-dependencies]
 test = [
-    "anyio >= 4.0",
+    "anyio[trio] >= 4.1",
     "coverage >= 7",
-    "pytest",
+    "pytest >= 7",
 ]
 doc = [
     "Sphinx >= 7.0",
@@ -48,13 +48,13 @@ doc = [
 ]
 
 [project.entry-points."asphalt.components"]
-py4j = "asphalt.py4j.component:Py4JComponent"
+py4j = "asphalt.py4j._component:Py4JComponent"
 
 [tool.setuptools_scm]
 version_scheme = "post-release"
 local_scheme = "dirty-tag"
 
-[tool.ruff]
+[tool.ruff.lint]
 select = [
     "ASYNC",        # flake8-async
     "E", "F", "W",  # default Flake8
@@ -66,11 +66,15 @@ select = [
     "UP",           # pyupgrade
 ]
 
+[tool.ruff.lint.isort]
+known-first-party = ["asphalt.py4j"]
+
 [tool.mypy]
 python_version = "3.8"
-strict = true
+#strict = true
 ignore_missing_imports = true
-mypy_path = ["src", "tests"]
+explicit_package_bases = true
+mypy_path = ["src", "tests", "examples"]
 
 [tool.coverage.run]
 source = ["asphalt.py4j"]

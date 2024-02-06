@@ -7,7 +7,7 @@ from collections.abc import AsyncGenerator
 from importlib import import_module
 from typing import Any, Iterable, cast
 
-from asphalt.core import Component, Context, context_teardown
+from asphalt.core import Component, add_resource, context_teardown
 
 from py4j.java_gateway import (
     CallbackServerParameters,
@@ -16,7 +16,7 @@ from py4j.java_gateway import (
     launch_gateway,
 )
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger("asphalt.py4j")
 package_re = re.compile(r"\{(.+?)\}")
 
 
@@ -87,7 +87,7 @@ class Py4JComponent(Component):
             self.callback_server_params = callback_server
 
     @context_teardown
-    async def start(self, ctx: Context) -> AsyncGenerator[None, Exception | None]:
+    async def start(self) -> AsyncGenerator[None, Exception | None]:
         if self.launch_jvm:
             self.gateway_params.port = launch_gateway(
                 classpath=self.classpath, javaopts=self.javaopts
@@ -97,7 +97,7 @@ class Py4JComponent(Component):
             gateway_parameters=self.gateway_params,
             callback_server_parameters=self.callback_server_params,
         )
-        ctx.add_resource(gateway, self.resource_name)
+        await add_resource(gateway, self.resource_name)
         logger.info(
             "Configured Py4J gateway (%s; address=%s, port=%d)",
             self.resource_name,
