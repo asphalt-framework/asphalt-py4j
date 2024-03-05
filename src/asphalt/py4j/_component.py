@@ -97,7 +97,11 @@ class Py4JComponent(Component):
             gateway_parameters=self.gateway_params,
             callback_server_parameters=self.callback_server_params,
         )
-        await add_resource(gateway, self.resource_name)
+        add_resource(
+            gateway,
+            self.resource_name,
+            teardown_callback=gateway.shutdown if self.launch_jvm else gateway.close,
+        )
         logger.info(
             "Configured Py4J gateway (%s; address=%s, port=%d)",
             self.resource_name,
@@ -106,10 +110,5 @@ class Py4JComponent(Component):
         )
 
         yield
-
-        if self.launch_jvm:
-            gateway.shutdown()
-        else:
-            gateway.close()
 
         logger.info("Py4J gateway (%s) shut down", self.resource_name)

@@ -48,7 +48,7 @@ doc = [
 ]
 
 [project.entry-points."asphalt.components"]
-py4j = "asphalt.py4j._component:Py4JComponent"
+py4j = "asphalt.py4j:Py4JComponent"
 
 [tool.setuptools_scm]
 version_scheme = "post-release"
@@ -71,10 +71,10 @@ known-first-party = ["asphalt.py4j"]
 
 [tool.mypy]
 python_version = "3.8"
-#strict = true
+strict = true
 ignore_missing_imports = true
 explicit_package_bases = true
-mypy_path = ["src", "tests", "examples"]
+mypy_path = ["src"]
 
 [tool.coverage.run]
 source = ["asphalt.py4j"]
