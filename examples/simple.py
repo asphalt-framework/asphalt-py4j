@@ -3,7 +3,7 @@ A simple example that reads its own source code using Java classes and then prin
 standard output.
 """
 import anyio.to_thread
-from asphalt.core import CLIApplicationComponent, require_resource, run_application
+from asphalt.core import CLIApplicationComponent, get_resource_nowait, run_application
 from py4j.java_gateway import JavaGateway
 
 
@@ -21,8 +21,8 @@ class ApplicationComponent(CLIApplicationComponent):
             reader.close()
             print(javagw.jvm.java.lang.String(buffer))
 
-        javagw = require_resource(JavaGateway)
+        javagw = get_resource_nowait(JavaGateway)
         await anyio.to_thread.run_sync(read_file)
 
 
-anyio.run(run_application, ApplicationComponent())
+run_application(ApplicationComponent())
