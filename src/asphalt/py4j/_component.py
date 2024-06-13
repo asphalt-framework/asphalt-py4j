@@ -87,7 +87,7 @@ class Py4JComponent(Component):
             self.callback_server_params = callback_server
 
     @context_teardown
-    async def start(self) -> AsyncGenerator[None, Exception | None]:
+    async def start(self) -> AsyncGenerator[None, BaseException | None]:
         if self.launch_jvm:
             self.gateway_params.port = launch_gateway(
                 classpath=self.classpath, javaopts=self.javaopts
