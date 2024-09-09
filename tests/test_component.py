@@ -4,12 +4,13 @@ import logging
 import os
 from typing import Any
 
-import asphalt.py4j
 import pytest
-from asphalt.core.context import Context
-from asphalt.py4j.component import Py4JComponent
 from py4j.java_gateway import CallbackServerParameters, GatewayParameters, JavaGateway
 from pytest import LogCaptureFixture
+
+import asphalt.py4j
+from asphalt.core.context import Context
+from asphalt.py4j.component import Py4JComponent
 
 
 @pytest.mark.anyio

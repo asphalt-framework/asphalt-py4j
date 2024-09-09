@@ -3,8 +3,9 @@ A simple example that reads its own source code using Java classes and then prin
 standard output.
 """
 
-from asphalt.core import CLIApplicationComponent, Context, run_application
 from py4j.java_gateway import JavaGateway
+
+from asphalt.core import CLIApplicationComponent, Context, run_application
 
 
 class ApplicationComponent(CLIApplicationComponent):
