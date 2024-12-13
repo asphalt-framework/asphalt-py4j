@@ -29,3 +29,10 @@ repos:
         additional_dependencies:
           - asphalt@git+https://github.com/asphalt-framework/asphalt@5.0
           - pytest
+
+  - repo: https://github.com/pre-commit/pygrep-hooks
+    rev: v1.10.0
+    hooks:
+    - id: rst-backticks
+    - id: rst-directive-colons
+    - id: rst-inline-touching-normal
