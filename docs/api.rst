@@ -1,7 +1,9 @@
 API reference
 =============
 
+.. py:currentmodule:: asphalt.py4j
+
 Component
 ---------
 
-.. autoclass:: asphalt.py4j.component.Py4JComponent
+.. autoclass:: Py4JComponent

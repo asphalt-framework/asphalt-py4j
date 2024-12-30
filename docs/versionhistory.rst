@@ -3,6 +3,11 @@ Version history
 
 This library adheres to `Semantic Versioning 2.0 <http://semver.org/>`_.
 
+**UNRELEASED**
+
+- **BACKWARD INCOMPATIBLE** Bumped minimum Asphalt version to 5.0
+- Dropped support for Python 3.7 and 3.8
+
 **4.0.0** (2023-12-26)
 
 - **BACKWARD INCOMPATIBLE** Bumped minimum Asphalt version to 4.8
