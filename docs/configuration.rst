@@ -52,10 +52,8 @@ of the component:
 
     components:
       py4j:
-      py4j-remote:
-        type: py4j
+      py4j/remote:
         launch_jvm: false
-        resource_name: remote
         gateway:
           host: 10.0.0.1
 

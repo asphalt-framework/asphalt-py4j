@@ -3,11 +3,11 @@ from __future__ import annotations
 import logging
 import os
 import re
-from collections.abc import AsyncGenerator
+from collections.abc import Iterable
 from importlib import import_module
-from typing import Any, Iterable, cast
+from typing import Any, cast
 
-from asphalt.core import Component, add_resource, context_teardown
+from asphalt.core import Component, add_resource
 
 from py4j.java_gateway import (
     CallbackServerParameters,
@@ -24,7 +24,6 @@ class Py4JComponent(Component):
     """
     Creates a :class:`~py4j.java_gateway.JavaGateway` resource.
 
-    :param resource_name: name of the Java gateway resource to be published
     :param launch_jvm: ``True`` to spawn a Java Virtual Machine in a subprocess and
         connect to it, ``False`` to connect to an existing Py4J enabled JVM
     :param gateway: either a :class:`~py4j.java_gateway.GatewayParameters` object or
@@ -38,14 +37,12 @@ class Py4JComponent(Component):
 
     def __init__(
         self,
-        resource_name: str = "default",
         launch_jvm: bool = True,
         gateway: GatewayParameters | dict[str, Any] | None = None,
         callback_server: CallbackServerParameters | dict[str, Any] | bool = False,
         javaopts: Iterable[str] = (),
         classpath: Iterable[str] = "",
     ):
-        self.resource_name = resource_name
         self.launch_jvm = launch_jvm
         classpath = (
             classpath if isinstance(classpath, str) else os.pathsep.join(classpath)
@@ -86,8 +83,7 @@ class Py4JComponent(Component):
         else:
             self.callback_server_params = callback_server
 
-    @context_teardown
-    async def start(self) -> AsyncGenerator[None, BaseException | None]:
+    async def start(self) -> None:
         if self.launch_jvm:
             self.gateway_params.port = launch_gateway(
                 classpath=self.classpath, javaopts=self.javaopts
@@ -99,16 +95,5 @@ class Py4JComponent(Component):
         )
         add_resource(
             gateway,
-            self.resource_name,
             teardown_callback=gateway.shutdown if self.launch_jvm else gateway.close,
         )
-        logger.info(
-            "Configured Py4J gateway (%s; address=%s, port=%d)",
-            self.resource_name,
-            self.gateway_params.address,
-            self.gateway_params.port,
-        )
-
-        yield
-
-        logger.info("Py4J gateway (%s) shut down", self.resource_name)
